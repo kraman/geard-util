@@ -58,7 +58,7 @@ func GenerateAuthorizedKeys(name string) error {
 		fmt.Println("k", keyFile)
 		srcFile, err = os.Open(keyFile)
 		defer srcFile.Close()
-		fmt.Println(w.WriteString("command=\"" + geard.GearBasePath + "/bin/geard-switchns\",no-port-forwarding,no-agent-forwarding,no-X11-forwarding "))
+		fmt.Println(w.WriteString("command=\"" + geard.GearBasePath() + "/bin/geard-switchns\",no-port-forwarding,no-agent-forwarding,no-X11-forwarding "))
 		fmt.Println(io.Copy(w, srcFile))
 		fmt.Println(w.WriteString("\n"))
 	}
