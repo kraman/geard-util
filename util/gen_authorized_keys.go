@@ -2,7 +2,8 @@ package util
 
 import (
 	"bufio"
-	"github.com/smarterclayton/geard"
+	"github.com/smarterclayton/geard/gears"
+	"github.com/smarterclayton/geard/config"
 	"github.com/smarterclayton/geard/selinux"
 	"io"
 	"os"
@@ -14,7 +15,7 @@ import (
 
 func GenerateAuthorizedKeys(name string) error {
 	var err error
-	var gearId geard.Identifier
+	var gearId gears.Identifier
 	var sshKeys []string
 	var destFile *os.File
 	var srcFile *os.File
@@ -24,7 +25,7 @@ func GenerateAuthorizedKeys(name string) error {
 		return err
 	}
 
-	if gearId, err = geard.NewIdentifier(name); err != nil {
+	if gearId, err = gears.NewIdentifier(name); err != nil {
 		return err
 	}
 
@@ -55,7 +56,7 @@ func GenerateAuthorizedKeys(name string) error {
 
 		srcFile, err = os.Open(keyFile)
 		defer srcFile.Close()
-		w.WriteString("command=\"" + geard.GearBasePath() + "/bin/geard-switchns\",no-port-forwarding,no-agent-forwarding,no-X11-forwarding ")
+		w.WriteString("command=\"" + config.GearBasePath() + "/bin/geard-switchns\",no-port-forwarding,no-agent-forwarding,no-X11-forwarding ")
 		io.Copy(w, srcFile)
 		w.WriteString("\n")
 	}
